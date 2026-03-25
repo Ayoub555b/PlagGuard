@@ -1,0 +1,202 @@
+/* Tarification (page abonnement) */
+
+.abonnement-main {
+  max-width: 1040px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1.75rem;
+  padding-bottom: 2.75rem;
+}
+
+.abonnement-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.abonnement-subtitle {
+  margin: 0 0 1.5rem;
+  color: var(--pg-muted);
+  font-size: 1rem;
+}
+
+.tarif-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.tarif-card {
+  background: var(--pg-surface);
+  border: 1px solid var(--pg-border);
+  border-radius: var(--pg-radius);
+  padding: 1.5rem;
+  box-shadow: var(--pg-shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+
+.tarif-card--free .tarif-price {
+  color: #16a34a;
+}
+
+.tarif-card--pro {
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
+.tarif-card--pro .tarif-price {
+  color: var(--pg-primary);
+}
+
+.tarif-card--proplus {
+  border-color: rgba(37, 99, 235, 0.45);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.07) 0%, var(--pg-surface) 70%);
+  box-shadow: var(--pg-shadow-md);
+}
+
+.tarif-card-head {
+  margin-bottom: 1rem;
+}
+
+.tarif-plan {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.tarif-reco {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--pg-primary);
+  margin-bottom: 0.75rem;
+}
+
+.tarif-price {
+  margin-top: 0.5rem;
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.tarif-per {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--pg-muted);
+  margin-left: 0.15rem;
+}
+
+.tarif-features {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: var(--pg-text);
+}
+
+.tarif-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.tarif-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.tarif-card--pro .tarif-check {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--pg-primary);
+}
+
+.tarif-card--proplus .tarif-check {
+  background: rgba(37, 99, 235, 0.16);
+  color: var(--pg-primary);
+}
+
+.abonnement-cta {
+  width: 100%;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  font-weight: 700;
+  border: 1px solid var(--pg-border);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.abonnement-cta[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.78;
+}
+
+.abonnement-cta--ghost {
+  background: #ffffff;
+}
+
+.abonnement-cta--primary {
+  background: var(--pg-primary);
+  border-color: var(--pg-primary);
+  color: #ffffff;
+}
+
+.abonnement-cta--dark {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+.tarif-card .abonnement-cta {
+  margin-top: auto; /* pousse le bouton en bas */
+}
+
+.tarif-card form {
+  margin-top: auto; /* pousse le bouton en bas */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tarif-phone-input {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid var(--pg-border);
+  font-size: 1rem;
+  outline: none;
+}
+
+.tarif-phone-input:focus {
+  border-color: rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 0 4px var(--pg-primary-ring);
+}
+
+@media (max-width: 900px) {
+  .tarif-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tarif-card {
+    min-height: unset;
+  }
+}
+

@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Tableau de bord administrateur | PlagGuard{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="pg-admin-brand">
+  <span class="pg-admin-brand-logo">PG</span>
+  <div class="pg-admin-brand-text">
+    <h1 id="site-name">PlagGuard Admin</h1>
+    <p>Panneau d'administration</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}

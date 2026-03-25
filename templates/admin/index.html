@@ -1,0 +1,93 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="pg-admin-layout">
+  <aside class="pg-admin-sidebar">
+    <div class="pg-admin-sidebar-title">Navigation</div>
+    <a class="pg-admin-side-link is-active" href="{% url 'admin:index' %}">Tableau de bord</a>
+    {% if users_admin_url %}
+    <a class="pg-admin-side-link" href="{{ users_admin_url }}">Utilisateurs</a>
+    {% endif %}
+    <a class="pg-admin-side-link" href="{% url 'index' %}" target="_blank" rel="noopener">Voir le site public</a>
+    <a class="pg-admin-side-link" href="{% url 'accounts:accueil' %}" target="_blank" rel="noopener">Espace utilisateur</a>
+
+    <div class="pg-admin-sidebar-title">Administration</div>
+    {% for app in app_list %}
+      {% if app.app_url %}
+      <a class="pg-admin-side-link" href="{{ app.app_url }}">{{ app.name }}</a>
+      {% endif %}
+    {% endfor %}
+  </aside>
+
+  <main class="pg-admin-main">
+    <section class="pg-admin-hero">
+      <h2>Bienvenue sur le tableau de bord administrateur</h2>
+      <p>Gerez les utilisateurs, les documents, les analyses et les rapports depuis une interface centralisee.</p>
+      <div class="pg-admin-stats">
+        <div class="pg-admin-stat-card">
+          <span class="label">Applications</span>
+          <strong>{{ app_list|length }}</strong>
+        </div>
+        <div class="pg-admin-stat-card">
+          <span class="label">Acces rapide</span>
+          <strong>{{ user.get_username }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="pg-admin-section">
+      <div class="pg-admin-section-head">
+        <h3>Apercu des utilisateurs</h3>
+        {% if users_admin_url %}
+        <a class="pg-admin-link-btn" href="{{ users_admin_url }}">Voir tous</a>
+        {% endif %}
+      </div>
+      <div class="pg-admin-users-list">
+        {% for item in recent_users %}
+        <div class="pg-admin-user-row">
+          <div>
+            <strong>{{ item.get_username }}</strong>
+            <div class="pg-admin-user-meta">{{ item.email|default:"Sans e-mail" }}</div>
+          </div>
+          <span class="pg-admin-user-badge">{% if item.is_staff %}Admin{% else %}Utilisateur{% endif %}</span>
+        </div>
+        {% empty %}
+        <p class="pg-admin-empty">Aucun utilisateur pour le moment.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="pg-admin-section">
+      <h3>Modules disponibles</h3>
+      <div class="pg-admin-grid">
+        {% for app in app_list %}
+        <article class="pg-admin-app-card">
+          <header>
+            <h4>{{ app.name }}</h4>
+          </header>
+          <ul>
+            {% for model in app.models %}
+            <li>
+              {% if model.admin_url %}
+                <a href="{{ model.admin_url }}">{{ model.name }}</a>
+              {% else %}
+                <span>{{ model.name }}</span>
+              {% endif %}
+              {% if model.add_url %}
+                <a class="add-link" href="{{ model.add_url }}">Ajouter</a>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}

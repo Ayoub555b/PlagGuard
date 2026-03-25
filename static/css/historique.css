@@ -1,0 +1,143 @@
+/* PlagGuard - Page Historique (design professionnel) */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body.page-historique {
+  background: #f8fafc;
+}
+
+body.page-historique .historique-main {
+  padding: 1.5rem 1.25rem 5.5rem;
+}
+
+.historique-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding-bottom: 5.5rem;
+}
+
+.historique-page-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.historique-page-intro {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.historique-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.historique-item {
+  margin: 0;
+  padding: 0;
+}
+
+.historique-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 1.25rem 1.35rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.historique-link:hover {
+  background: #fff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.historique-link:active {
+  background: #f8fafc;
+}
+
+.historique-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0f172a;
+  flex: 1 1 auto;
+}
+
+.historique-meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.historique-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.historique-badge-ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.historique-badge-warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.historique-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  color: #2563eb;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.historique-link:hover .historique-arrow {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.historique-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.historique-empty-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+

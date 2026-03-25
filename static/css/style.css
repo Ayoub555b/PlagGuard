@@ -1,0 +1,422 @@
+/* PlagGuard - Page de connexion / inscription */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f3f4f6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1a1a1a;
+  padding: 2rem;
+}
+
+/* Ajustements appliqués uniquement si le User-Agent semble mobile */
+body.is-mobile {
+  padding: 1rem;
+}
+
+body.is-mobile .card {
+  max-width: 100%;
+  padding: 1.5rem;
+  border-radius: 14px;
+}
+
+body.is-mobile .card-image {
+  height: 150px;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 1.25rem;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.back-link:hover {
+  color: #3b82f6;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  background: #e5e7eb;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.page-subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.label-row label {
+  margin-bottom: 0;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .input-icon {
+  position: absolute;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.75rem 44px 0.75rem 44px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: #6b7280;
+}
+
+.toggle-password .eye-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.25rem;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+}
+
+a.btn-primary-link {
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  line-height: 1.5;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+
+/* Erreurs de formulaire */
+.form-group .errorlist {
+  list-style: none;
+  margin: 0.25rem 0 0 0;
+  padding: 0;
+  font-size: 0.85rem;
+  color: #dc2626;
+}
+
+.alert-messages {
+  margin-bottom: 1rem;
+}
+
+.alert-messages ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-messages li {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert-messages .success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.alert-messages .error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.alert-messages .info {
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.separator span {
+  padding: 0 1rem;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn-social:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+a.btn-social-link {
+  text-decoration: none;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+a.btn-social-link:hover {
+  color: #111827;
+}
+
+.btn-social-disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-social img,
+.btn-social .ms-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.auth-link a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* Page inscription */
+body.page-inscription {
+  background: #ffffff;
+}
+
+.card-inscription {
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+}
+
+.inscription-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-link-blue {
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.inscription-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.shield-block {
+  width: 100%;
+  background: #e0f2fe;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shield-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.shield-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.btn-social-full {
+  width: 100%;
+  flex: none;
+}
+
+.legal-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+.legal-text a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.legal-text a:hover {
+  text-decoration: underline;
+}

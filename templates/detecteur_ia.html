@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détecteur IA - PlagGuard</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/accueil.css' %}">
+</head>
+<body class="page-accueil page-detecteur-ia {% if is_mobile %}is-mobile{% endif %} has-sidebar">
+  <header class="accueil-header">
+    <button type="button" class="menu-btn" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <h1 class="accueil-brand">PlagGuard</h1>
+    <details class="profile-menu">
+      <summary class="profile-btn" aria-label="Menu utilisateur">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </summary>
+      <div class="profile-menu-dropdown">
+        <a href="{% url 'accounts:reglages_plagiat' %}" class="profile-menu-item">Reglage plagiat</a>
+        <a href="{% url 'accounts:reglages' %}" class="profile-menu-item">Reglages</a>
+        <a href="{% url 'accounts:logout' %}" class="profile-menu-item profile-menu-item-danger">Deconnexion</a>
+      </div>
+    </details>
+  </header>
+
+  <aside class="sidebar-nav" aria-label="Menu latéral">
+    <div class="sidebar-brand">PlagGuard</div>
+    <div class="sidebar-links">
+      <a href="{% url 'accounts:accueil' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11V18a1 1 0 01-1 1h-3m-2 0H9a1 1 0 001-1V8a1 1 0 011-1h2a1 1 0 011 1v10a1 1 0 001 1h3" />
+        </svg>
+        <span>ACCUEIL</span>
+      </a>
+      <a href="{% url 'accounts:historique' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>HISTORIQUE</span>
+      </a>
+      <a href="{% url 'accounts:rapport' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span>RAPPORTS</span>
+      </a>
+      <a href="{% url 'accounts:reglages' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>RÉGLAGES</span>
+      </a>
+
+      {% if has_abonnement_actif %}
+      <a href="{% url 'accounts:detecteur_ia' %}" class="sidebar-item sidebar-item--active">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span>DÉTECTEUR IA</span>
+      </a>
+      <a href="{% url 'accounts:detecteur_plagiat' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
+        </svg>
+        <span>DÉTECTEUR PLAGIAT</span>
+      </a>
+      {% endif %}
+
+      <a href="{% url 'accounts:abonnement' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>ABONNEMENT</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="accueil-main abonnement-main">
+    <h1 class="abonnement-title">Détecteur IA (Sapling)</h1>
+    <p class="abonnement-subtitle">
+      Collez votre texte et cliquez sur “Analyser”. Sapling calcule la probabilité (0 à 1) qu’il soit généré automatiquement.
+    </p>
+
+    <section class="analysis-workspace">
+      <div class="analysis-workspace-header">
+        <span class="analysis-badge">Analyse</span>
+        <h3 class="analysis-workspace-title" style="margin:0;">Nouvelle détection IA</h3>
+      </div>
+
+      <div class="check-area">
+        <div class="check-col check-col-text">
+          <label class="check-col-label" for="content">
+            <span class="check-col-label-text">Texte à analyser</span>
+            <span class="check-col-label-hint">Obligatoire</span>
+          </label>
+          <div class="textarea-shell">
+            <textarea id="content" class="content-textarea" placeholder="Collez votre texte (80 à 500 mots)." maxlength="100000" rows="12"></textarea>
+          </div>
+          <p class="urls-hint" style="margin-top:0.6rem;">
+            Min 80 mots, max 500 mots.
+          </p>
+        </div>
+      </div>
+
+      <div class="verify-actions">
+        <p class="verify-feedback" id="verify-feedback" role="status" aria-live="polite" hidden></p>
+        <button type="button" class="btn-verify" id="btn-verify">
+          <span>Analyser</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div id="sapling-result" style="margin-top:1rem; display:none;">
+        <div class="tarif-card" style="max-width:720px;">
+          <div class="tarif-card-head">
+            <h2 class="tarif-plan" style="font-size:1.1rem;">Résultat</h2>
+            <p style="margin:0.25rem 0 0; color: var(--pg-muted);">
+              Score IA probable : <strong id="sapling-score-pct"></strong>
+            </p>
+            <p style="margin:0.45rem 0 0; color: var(--pg-muted);">
+              Perplexité (proxy) : <strong id="sapling-perplexity"></strong>
+            </p>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <p style="margin:0 0 0.5rem; font-weight:600;">Extraits les plus “à risque” :</p>
+            <ul id="sapling-top-sentences" style="padding-left:1.1rem; margin:0;"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <form id="csrf-helper" style="display:none;">{% csrf_token %}</form>
+
+  <script>
+    (function() {
+      var textarea = document.getElementById('content');
+      var feedbackEl = document.getElementById('verify-feedback');
+      var btn = document.getElementById('btn-verify');
+      var resultBox = document.getElementById('sapling-result');
+      var scorePctEl = document.getElementById('sapling-score-pct');
+      var perplexityEl = document.getElementById('sapling-perplexity');
+      var topSentencesEl = document.getElementById('sapling-top-sentences');
+
+      var saplingUrl = "{% url 'accounts:sapling_plagiat_api' %}";
+
+      function getCsrfToken() {
+        var name = 'csrftoken';
+        var cookie = document.cookie || '';
+        var parts = cookie.split(';');
+        for (var i = 0; i < parts.length; i++) {
+          var c = parts[i].trim();
+          if (c.substring(0, name.length + 1) === (name + '=')) {
+            return decodeURIComponent(c.substring(name.length + 1));
+          }
+        }
+
+        // Fallback : lire le token depuis le champ caché
+        var el = document.querySelector('#csrf-helper input[name=csrfmiddlewaretoken]');
+        return el ? el.value : '';
+      }
+
+      function setFeedback(msg, isError) {
+        if (!msg) {
+          feedbackEl.hidden = true;
+          feedbackEl.textContent = '';
+          return;
+        }
+        feedbackEl.hidden = false;
+        feedbackEl.textContent = msg;
+        feedbackEl.classList.toggle('verify-feedback--error', !!isError);
+      }
+
+      function countWords(text) {
+        var t = (text || '').trim();
+        return t ? t.split(/\s+/).filter(Boolean).length : 0;
+      }
+
+      var MIN_WORDS = 80;
+      var MAX_WORDS = 500;
+
+      btn.addEventListener('click', function() {
+        var text = textarea.value.trim();
+        var n = countWords(text);
+        resultBox.style.display = 'none';
+        topSentencesEl.innerHTML = '';
+
+        if (n < MIN_WORDS) {
+          setFeedback('Le texte doit contenir au moins ' + MIN_WORDS + ' mots.', true);
+          return;
+        }
+        if (n > MAX_WORDS) {
+          setFeedback('Le texte ne doit pas dépasser ' + MAX_WORDS + ' mots.', true);
+          return;
+        }
+
+        setFeedback('Analyse en cours...', false);
+        btn.disabled = true;
+
+        fetch(saplingUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken(),
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({ text: text }),
+          credentials: 'same-origin'
+        })
+          .then(function(res) {
+            return res.text().then(function(raw) {
+              var data;
+              try { data = JSON.parse(raw); } catch (e) { data = { ok: false, error: 'Réponse invalide.' }; }
+              return { res: res, data: data };
+            });
+          })
+          .then(function(_ref) {
+            var data = _ref.data;
+            if (data.ok) {
+              if (data.redirect) {
+                window.location.href = data.redirect;
+                return;
+              }
+              var scorePct = data.score_pct != null ? data.score_pct : '';
+              scorePctEl.textContent = scorePct + '%';
+              if (data.perplexity_proxy != null) {
+                var p = Number(data.perplexity_proxy);
+                perplexityEl.textContent = isNaN(p) ? '—' : p.toFixed(2);
+              } else {
+                perplexityEl.textContent = '—';
+              }
+              var top = data.top_sentences || [];
+              topSentencesEl.innerHTML = '';
+              top.forEach(function(item) {
+                if (!item || !item.sentence) return;
+                var li = document.createElement('li');
+                li.textContent = item.sentence + ' (score: ' + Math.round((item.score || 0) * 100) + ')';
+                topSentencesEl.appendChild(li);
+              });
+              resultBox.style.display = 'block';
+              setFeedback('Analyse terminée.', false);
+            } else {
+              setFeedback(data.error || 'Analyse impossible.', true);
+            }
+          })
+          .catch(function(err) {
+            console.error('Sapling fetch error:', err);
+            var msg = (err && err.message) ? err.message : '';
+            setFeedback('Erreur réseau ou serveur.' + (msg ? ' ' + msg : ''), true);
+          })
+          .finally(function() {
+            btn.disabled = false;
+          });
+      });
+    })();
+  </script>
+  <script>
+    (function() {
+      var body = document.body;
+      var menuBtn = document.querySelector('.accueil-header .menu-btn');
+      var sidebar = document.querySelector('aside.sidebar-nav');
+      if (!menuBtn || !sidebar) return;
+
+      menuBtn.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        body.classList.toggle('sidebar-open-mobile');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!body.classList.contains('sidebar-open-mobile')) return;
+        if (sidebar.contains(e.target) || menuBtn.contains(e.target)) return;
+        body.classList.remove('sidebar-open-mobile');
+      });
+    })();
+  </script>
+</body>
+</html>
+

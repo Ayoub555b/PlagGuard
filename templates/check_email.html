@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérifiez votre e-mail - PlagGuard</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="page-inscription {% if is_mobile %}is-mobile{% endif %}">
+  <div class="card card-inscription">
+    <header class="inscription-header">
+      <a href="{% url 'accounts:login' %}" class="back-link back-link-blue">←</a>
+      <h1 class="inscription-logo">PlagGuard</h1>
+    </header>
+
+    <div class="shield-block">
+      <div class="shield-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="#2563eb" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+    </div>
+
+    <h2 class="page-title">Vérifiez votre boîte mail</h2>
+    <p class="page-subtitle">Nous vous avons envoyé un e-mail de confirmation. Cliquez sur le lien dans l’e-mail pour activer votre compte. Vous pourrez ensuite vous connecter.</p>
+
+    {% if messages %}
+    <div class="alert-messages">
+      <ul>
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <p class="auth-link" style="margin-top: 1rem;">
+      <a href="{% url 'accounts:login' %}">Retour à la connexion</a>
+    </p>
+  </div>
+</body>
+</html>

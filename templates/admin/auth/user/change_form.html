@@ -1,0 +1,33 @@
+{% extends "admin/change_form.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/admin_user_form.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content_title %}
+<div class="pg-user-form-hero">
+  {% if add %}
+  <h1>Ajouter un utilisateur</h1>
+  <p>Créez un nouveau compte administrateur ou utilisateur depuis une interface claire et professionnelle.</p>
+  {% else %}
+  <h1>Modifier un utilisateur</h1>
+  <p>Gérez les informations du compte, les permissions et l'état d'activation en toute simplicité.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block form_top %}
+  {% if not is_popup %}
+  <div class="pg-user-form-note">
+    {% if add %}
+    Après la création du compte, vous pourrez configurer des options supplémentaires.
+    {% else %}
+    Pensez à enregistrer vos modifications pour appliquer les changements du compte utilisateur.
+    {% endif %}
+  </div>
+  {% endif %}
+{% endblock %}

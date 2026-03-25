@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abonnement - PlagGuard</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/accueil.css' %}">
+  <link rel="stylesheet" href="{% static 'css/abonnement.css' %}">
+</head>
+<body class="page-accueil page-abonnement {% if is_mobile %}is-mobile{% endif %} has-sidebar">
+  <header class="accueil-header">
+    <button type="button" class="menu-btn" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <h1 class="accueil-brand">PlagGuard</h1>
+    <details class="profile-menu">
+      <summary class="profile-btn" aria-label="Menu utilisateur">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </summary>
+      <div class="profile-menu-dropdown">
+        <a href="{% url 'accounts:reglages_plagiat' %}" class="profile-menu-item">Reglage plagiat</a>
+        <a href="{% url 'accounts:reglages' %}" class="profile-menu-item">Reglages</a>
+        <a href="{% url 'accounts:logout' %}" class="profile-menu-item profile-menu-item-danger">Deconnexion</a>
+      </div>
+    </details>
+  </header>
+
+  <aside class="sidebar-nav" aria-label="Menu latéral">
+    <div class="sidebar-brand">PlagGuard</div>
+    <div class="sidebar-links">
+      <a href="{% url 'accounts:accueil' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11V18a1 1 0 01-1 1h-3m-2 0H9a1 1 0 001-1V8a1 1 0 011-1h2a1 1 0 011 1v10a1 1 0 001 1h3" />
+        </svg>
+        <span>ACCUEIL</span>
+      </a>
+      <a href="{% url 'accounts:historique' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>HISTORIQUE</span>
+      </a>
+      <a href="{% url 'accounts:rapport' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span>RAPPORTS</span>
+      </a>
+      <a href="{% url 'accounts:reglages' %}" class="sidebar-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>RÉGLAGES</span>
+      </a>
+      <a href="{% url 'accounts:abonnement' %}" class="sidebar-item sidebar-item--active">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>ABONNEMENT</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="accueil-main abonnement-main">
+    <h1 class="abonnement-title">Tarification</h1>
+    <p class="abonnement-subtitle">Choisissez l'offre adaptée à vos besoins. (Bientôt disponible)</p>
+
+    <section class="tarif-grid" aria-label="Offres">
+      <div class="tarif-card tarif-card--free">
+        <div class="tarif-card-head">
+          <h2 class="tarif-plan">Forfait Gratuit</h2>
+          <div class="tarif-price">0 Fdj<span class="tarif-per">/ mois</span></div>
+        </div>
+
+        <ul class="tarif-features">
+          <li><span class="tarif-check">✓</span> Aucune carte de crédit requise</li>
+          <li><span class="tarif-check">✓</span> Demandes d'agents illimitées</li>
+          <li><span class="tarif-check">✓</span> Complétions d'onglets limitées</li>
+        </ul>
+
+        <a href="{% url 'accounts:abonnement_gratuit' %}" class="abonnement-cta abonnement-cta--ghost">Commencer gratuitement</a>
+      </div>
+
+      <div class="tarif-card tarif-card--pro">
+        <div class="tarif-card-head">
+          <h2 class="tarif-plan">Pro</h2>
+          <div class="tarif-price">3557 Fdj<span class="tarif-per">/ mois</span></div>
+        </div>
+
+        <ul class="tarif-features">
+          <li><span class="tarif-check">✓</span> Limites étendues sur l'agent</li>
+          <li><span class="tarif-check">✓</span> Accès aux modèles de premier plan</li>
+          <li><span class="tarif-check">✓</span> MCP, complétions et accroches</li>
+        </ul>
+
+        <form method="post" action="{% url 'accounts:waafi_abonnement_start' 'PRO' %}">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="payer_phone"
+            class="tarif-phone-input"
+            inputmode="numeric"
+            placeholder="Numéro Waafi du client (payer) (ex: 2526XXXXXXXX)"
+            required
+          />
+          <button type="submit" class="abonnement-cta abonnement-cta--primary">Payer WaafiPay (Pro)</button>
+        </form>
+      </div>
+
+      <div class="tarif-card tarif-card--proplus">
+        <div class="tarif-card-head">
+          <div class="tarif-reco">Recommandé</div>
+          <h2 class="tarif-plan">Pro+</h2>
+          <div class="tarif-price">10670 Fdj<span class="tarif-per">/ mois</span></div>
+        </div>
+
+        <ul class="tarif-features">
+          <li><span class="tarif-check">✓</span> Tout ce qui est inclus dans Pro, et plus encore</li>
+          <li><span class="tarif-check">✓</span> Utilisation multipliée par 3 sur tous les modèles OpenAI, Claude et Gemini</li>
+        </ul>
+
+        <form method="post" action="{% url 'accounts:waafi_abonnement_start' 'PROPLUS' %}">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="payer_phone"
+            class="tarif-phone-input"
+            inputmode="numeric"
+            placeholder="Numéro Waafi du client (payer) (ex: 2526XXXXXXXX)"
+            required
+          />
+          <button type="submit" class="abonnement-cta abonnement-cta--dark">Payer WaafiPay (Pro+)</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navigation mobile">
+    <a href="{% url 'accounts:accueil' %}" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11V18a1 1 0 01-1 1h-3m-2 0H9a1 1 0 001-1V8a1 1 0 011-1h2a1 1 0 011 1v10a1 1 0 001 1h3" />
+      </svg>
+      <span>ACCUEIL</span>
+    </a>
+    <a href="{% url 'accounts:historique' %}" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>HISTORIQUE</span>
+    </a>
+    <a href="{% url 'accounts:rapport' %}" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <span>RAPPORTS</span>
+    </a>
+    <a href="{% url 'accounts:reglages' %}" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span>RGLAGES</span>
+    </a>
+  </nav>
+  <script>
+    (function() {
+      var body = document.body;
+      var menuBtn = document.querySelector('.accueil-header .menu-btn');
+      var sidebar = document.querySelector('aside.sidebar-nav');
+      if (!menuBtn || !sidebar) return;
+
+      menuBtn.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        body.classList.toggle('sidebar-open-mobile');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!body.classList.contains('sidebar-open-mobile')) return;
+        if (sidebar.contains(e.target) || menuBtn.contains(e.target)) return;
+        body.classList.remove('sidebar-open-mobile');
+      });
+    })();
+  </script>
+</body>
+</html>
+

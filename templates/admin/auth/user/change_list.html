@@ -1,0 +1,93 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/css/changelists.css' %}">
+  {% if cl.formset %}
+    <link rel="stylesheet" href="{% static 'admin/css/forms.css' %}">
+  {% endif %}
+  {% if cl.formset or action_form %}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  <link rel="stylesheet" href="{% static 'css/admin_users.css' %}">
+  {{ media.css }}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+<script src="{% static 'admin/js/filters.js' %}" defer></script>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<section class="pg-users-hero">
+  <div class="pg-users-title-wrap">
+    <h1>Gestion des utilisateurs</h1>
+    <p>Consultez, filtrez et gérez les comptes de la plateforme depuis un espace unifie.</p>
+  </div>
+  {% block object-tools %}
+  <div class="pg-users-actions">
+    <ul class="object-tools">
+      {% block object-tools-items %}
+        {% change_list_object_tools %}
+      {% endblock %}
+    </ul>
+  </div>
+  {% endblock %}
+</section>
+
+<section class="pg-users-shell{% if cl.has_filters %} has-filters{% endif %}">
+  <div class="pg-users-main">
+    {% block search %}{% search_form cl %}{% endblock %}
+    {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+
+    <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+      {% csrf_token %}
+      {% if cl.formset %}
+      <div>{{ cl.formset.management_form }}</div>
+      {% endif %}
+
+      <div class="pg-users-table-wrap">
+        {% block result_list %}
+          {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+          {% result_list cl %}
+          {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+        {% endblock %}
+      </div>
+      {% block pagination %}{% pagination cl %}{% endblock %}
+    </form>
+  </div>
+
+  {% block filters %}
+    {% if cl.has_filters %}
+    <aside class="pg-users-filters">
+      <nav id="changelist-filter" aria-labelledby="changelist-filter-header">
+        <h2 id="changelist-filter-header">Filtres</h2>
+        {% if cl.is_facets_optional or cl.has_active_filters %}
+        <div id="changelist-filter-extra-actions">
+          {% if cl.is_facets_optional %}
+          <h3>
+            {% if cl.add_facets %}
+            <a href="{{ cl.remove_facet_link }}" class="hidelink">Masquer les nombres</a>
+            {% else %}
+            <a href="{{ cl.add_facet_link }}" class="viewlink">Afficher les nombres</a>
+            {% endif %}
+          </h3>
+          {% endif %}
+          {% if cl.has_active_filters %}
+          <h3><a href="{{ cl.clear_all_filters_qs }}">Effacer les filtres</a></h3>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+      </nav>
+    </aside>
+    {% endif %}
+  {% endblock %}
+</section>
+{% endblock %}

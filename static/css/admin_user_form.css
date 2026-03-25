@@ -1,0 +1,167 @@
+:root {
+  --pg-bg: #f3f6fb;
+  --pg-surface: #ffffff;
+  --pg-border: #dbe4f0;
+  --pg-text: #0f172a;
+  --pg-muted: #64748b;
+  --pg-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+body {
+  background: var(--pg-bg);
+}
+
+#content {
+  padding: 22px;
+}
+
+.pg-user-form-hero {
+  background: linear-gradient(135deg, #ffffff, #f8fbff);
+  border: 1px solid var(--pg-border);
+  border-radius: 14px;
+  box-shadow: var(--pg-shadow);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.pg-user-form-hero h1 {
+  margin: 0 0 6px;
+  color: var(--pg-text);
+  font-size: 1.2rem;
+}
+
+.pg-user-form-hero p {
+  margin: 0;
+  color: var(--pg-muted);
+}
+
+.pg-user-form-note {
+  margin-bottom: 12px;
+  border: 1px solid #dbeafe;
+  background: #eff6ff;
+  color: #1e3a8a;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+#content-main form > div {
+  background: var(--pg-surface);
+  border: 1px solid var(--pg-border);
+  border-radius: 14px;
+  box-shadow: var(--pg-shadow);
+  padding: 12px;
+}
+
+#content-main .module {
+  border: 1px solid #e6edf7;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+#content-main .module h2 {
+  background: linear-gradient(90deg, #0f4c81, #2563eb);
+  color: #fff;
+  border: 0;
+  margin: 0;
+  padding: 10px 12px;
+}
+
+#content-main .form-row {
+  border-bottom: 1px solid #eef3f9;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: minmax(180px, 230px) 1fr;
+  column-gap: 14px;
+  align-items: start;
+}
+
+#content-main .form-row:last-child {
+  border-bottom: 0;
+}
+
+#content-main .form-row > div {
+  min-width: 0;
+}
+
+#content-main .form-row label {
+  font-weight: 600;
+  color: #334155;
+}
+
+#content-main .help,
+#content-main .helptext {
+  color: #64748b;
+  font-size: 0.82rem;
+  margin-top: 6px;
+}
+
+/* Masquer les textes d'aide sous les champs (ex: règles mot de passe). */
+#content-main .help,
+#content-main .helptext,
+#content-main .help ul,
+#content-main .helptext ul {
+  display: none !important;
+}
+
+#content-main input[type="text"],
+#content-main input[type="password"],
+#content-main input[type="email"],
+#content-main input[type="url"],
+#content-main input[type="number"],
+#content-main textarea,
+#content-main select {
+  border: 1px solid #d6e2f2;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fbfdff;
+}
+
+#content-main input:focus,
+#content-main textarea:focus,
+#content-main select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.submit-row {
+  border: 1px solid #e6edf7;
+  border-radius: 12px;
+  background: #fbfdff;
+  padding: 10px 12px;
+}
+
+.submit-row input.default {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1d4ed8, #1e40af);
+  border: 0;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+.submit-row input[type="submit"] {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1d4ed8, #1e40af);
+  border: 0;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+.submit-row a.deletelink {
+  border-radius: 999px;
+}
+
+#content-main .errornote,
+#content-main ul.errorlist {
+  border-radius: 10px;
+}
+
+#content-main .aligned .vCheckboxLabel {
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  #content-main .form-row {
+    grid-template-columns: 1fr;
+  }
+}
