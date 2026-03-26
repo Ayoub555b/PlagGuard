@@ -1,0 +1,177 @@
+/* PlagGuard - Page Rapport (détail : diagramme, texte surligné, sources) */
+
+.rapport-main {
+  padding-bottom: 2rem;
+}
+
+.rapport-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.rapport-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+/* ----- Diagramme taux de plagiat (en haut) ----- */
+.rapport-diagramme {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.diagramme-container {
+  margin-bottom: 1rem;
+}
+
+.diagramme-bar {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.diagramme-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  transition: width 0.3s ease;
+}
+
+.diagramme-original {
+  background: #22c55e;
+  color: white;
+}
+
+.diagramme-plagiat {
+  background: #ef4444;
+  color: white;
+}
+
+.diagramme-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.diagramme-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.legend-dot.original {
+  background: #22c55e;
+}
+
+.legend-dot.plagiat {
+  background: #ef4444;
+}
+
+.diagramme-resume {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+/* ----- Texte analysé avec surlignage des plagiats ----- */
+.rapport-texte {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.rapport-texte-content {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.rapport-texte-content p {
+  margin: 0 0 1rem 0;
+}
+
+.rapport-texte-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Surlignage des passages plagiat */
+.plagiat {
+  background: #fef08a;
+  padding: 0.1em 0.2em;
+  border-radius: 3px;
+  border-bottom: 2px solid #eab308;
+}
+
+/* ----- Sites liés aux plagiats (en bas) ----- */
+.rapport-sources {
+  width: 100%;
+}
+
+.rapport-sources-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rapport-sources-list li {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+.rapport-sources-list a {
+  color: #2563eb;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.rapport-sources-list a:hover {
+  text-decoration: underline;
+}
+
+.source-match {
+  display: block;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.35rem;
+}

@@ -24,7 +24,10 @@
     </div>
 
     <h2 class="page-title">Vérifiez votre boîte mail</h2>
-    <p class="page-subtitle">Nous vous avons envoyé un e-mail de confirmation. Cliquez sur le lien dans l’e-mail pour activer votre compte. Vous pourrez ensuite vous connecter.</p>
+    <p class="page-subtitle">
+      Nous vous avons envoyé un e-mail contenant un <strong>code de confirmation</strong>.
+      Saisissez ce code ci-dessous pour activer votre compte.
+    </p>
 
     {% if messages %}
     <div class="alert-messages">
@@ -35,6 +38,38 @@
       </ul>
     </div>
     {% endif %}
+
+    <form method="post" action="{% url 'accounts:verify_email_code' %}" class="verify-code-form" id="verify-code-form">
+      {% csrf_token %}
+      <div class="form-group" style="margin-top: 1.25rem;">
+        <label for="id_code" style="display:block; font-weight:600; margin-bottom: 0.5rem;">
+          Code de confirmation (6 chiffres)
+        </label>
+        <input
+          type="text"
+          name="code"
+          id="id_code"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          placeholder="123456"
+          pattern="[0-9]{6}"
+          maxlength="6"
+          required
+          style="width:100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #e5e7eb;"
+        >
+      </div>
+
+      <button type="submit" class="btn-primary" style="margin-top: 1rem; width:100%;">
+        Activer mon compte
+      </button>
+    </form>
+
+    <form method="post" action="{% url 'accounts:resend_email_code' %}" style="margin-top: 0.9rem;">
+      {% csrf_token %}
+      <button type="submit" class="btn-secondary" style="width:100%;">
+        Renvoyer le code
+      </button>
+    </form>
 
     <p class="auth-link" style="margin-top: 1rem;">
       <a href="{% url 'accounts:login' %}">Retour à la connexion</a>

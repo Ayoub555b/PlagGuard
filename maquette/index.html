@@ -4,25 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PlagGuard — Détection de plagiat en ligne</title>
-  {% load static %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+  <link rel="stylesheet" href="css/landing.css">
 </head>
-<body class="landing-body {% if is_mobile %}is-mobile{% endif %}">
+<body class="landing-body">
   <header class="landing-header">
     <div class="landing-header-inner">
-      <a href="{% url 'index' %}" class="landing-logo">
+      <a href="index.html" class="landing-logo">
         <span class="landing-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M9 12l2 2 4-4" stroke="white" fill="none"></path>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4" stroke="white" fill="none"/></svg>
         </span>
         PlagGuard
       </a>
       <nav class="landing-nav">
-        <a href="{% url 'accounts:login' %}?force=1" class="landing-nav-link">Se connecter</a>
-        <a href="{% url 'accounts:register' %}?force=1" class="landing-nav-btn">S'inscrire</a>
+        <a href="connexion.html" class="landing-nav-link">Se connecter</a>
+        <a href="inscription.html" class="landing-nav-btn">S'inscrire</a>
       </nav>
     </div>
   </header>
@@ -34,7 +30,11 @@
           <h1 class="landing-hero-title">Protégez l'originalité de vos contenus</h1>
           <p class="landing-hero-desc">PlagGuard analyse vos textes en quelques secondes, détecte les similitudes avec des sources en ligne et vous aide à garantir l'intégrité de vos travaux académiques et professionnels.</p>
         </div>
-        <img class="landing-hero-illustration" src="{% static 'images/page_index.png' %}" alt="Aperçu" loading="lazy">
+        <img class="landing-hero-illustration" src="images/page_index.png" alt="Aperçu" loading="lazy">
+        <div class="landing-hero-actions">
+          <a href="accueil.html" class="landing-btn landing-btn-primary">Tester le site</a>
+          <a href="connexion.html" class="landing-btn landing-btn-secondary">Se connecter</a>
+        </div>
       </div>
     </section>
 
@@ -67,8 +67,8 @@
         <h2>Prêt à vérifier vos textes ?</h2>
         <p>Testez PlagGuard gratuitement ou connectez-vous à votre compte.</p>
         <div class="landing-cta-actions">
-          <a href="{% url 'accounts:accueil' %}" class="landing-btn landing-btn-primary">Tester le site</a>
-          <a href="{% url 'accounts:login' %}?force=1" class="landing-btn landing-btn-outline">Se connecter</a>
+          <a href="accueil.html" class="landing-btn landing-btn-primary">Tester le site</a>
+          <a href="connexion.html" class="landing-btn landing-btn-outline">Se connecter</a>
         </div>
       </div>
     </section>
@@ -78,8 +78,8 @@
     <div class="landing-footer-inner">
       <span class="landing-footer-brand">PlagGuard</span>
       <div class="landing-footer-links">
-        <a href="{% url 'accounts:login' %}?force=1">Connexion</a>
-        <a href="{% url 'accounts:register' %}?force=1">Inscription</a>
+        <a href="connexion.html">Connexion</a>
+        <a href="inscription.html">Inscription</a>
         <a href="#">Mentions légales</a>
         <a href="#">Contact</a>
       </div>
@@ -88,4 +88,3 @@
   </footer>
 </body>
 </html>
-

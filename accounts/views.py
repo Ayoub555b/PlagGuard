@@ -47,22 +47,25 @@ def _verification_absolute_url(request, token: str) -> str:
     return request.build_absolute_uri(path)
 
 
-def _send_verification_email(user, token):
-    """Envoie l'e-mail de confirmation avec le lien contenant le token."""
-    verification_url = getattr(user, '_verification_url', None)
-    if not verification_url:
+def _send_verification_email(user, raw_code: str):
+    """
+    Envoie l'e-mail de confirmation (par code de vérification).
+    """
+    if not raw_code:
+        # Fallback: si on n'a pas de code (cas non prévu), on ne fait rien.
         return
-    subject = 'Confirmez votre adresse e-mail - PlagGuard'
+
+    subject = "Votre code de confirmation - PlagGuard"
     message_plain = (
-        f'Bonjour {user.get_full_name() or user.email},\n\n'
-        f'Pour activer votre compte PlagGuard, cliquez sur le lien suivant :\n{verification_url}\n\n'
-        f'Ce lien expire dans 24 heures.\n\n'
-        f'Si vous n\'avez pas créé de compte, ignorez cet e-mail.\n\n'
-        f'— L\'équipe PlagGuard'
+        f"Bonjour {user.get_full_name() or user.email},\n\n"
+        f"Votre code de confirmation PlagGuard est : {raw_code}\n\n"
+        f"Ce code expire dans 24 heures.\n\n"
+        f"Si vous n'avez pas créé de compte, ignorez cet e-mail.\n\n"
+        f"— L'équipe PlagGuard"
     )
-    html_message = render_to_string('email_verification.html', {
+    html_message = render_to_string('email_verification_code.html', {
         'user': user,
-        'verification_url': verification_url,
+        'code': raw_code,
     })
     send_mail(
         subject=subject,
@@ -97,8 +100,7 @@ def login_view(request):
                 if not user.is_active:
                     messages.error(
                         request,
-                        'Compte non activé. Vérifiez votre boîte mail et cliquez sur le lien de confirmation '
-                        'que nous vous avons envoyé, puis réessayez de vous connecter.'
+                        'Compte non activé. Vérifiez votre boîte mail et saisissez le code de confirmation, puis réessayez de vous connecter.'
                     )
                     return render(request, 'connexion.html', {'form': form})
                 user = authenticate(request, username=user.username, password=password)
@@ -121,17 +123,22 @@ def login_view(request):
 
 
 def register_view(request):
+    force_register = request.GET.get("force") == "1"
+    if request.user.is_authenticated and force_register:
+        logout(request)
     if request.user.is_authenticated:
         return redirect('accounts:accueil')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Créer le token et envoyer l'e-mail
+            # Créer l'objet de vérification, générer un code et envoyer l'e-mail.
             token_obj = EmailVerificationToken.objects.create(user=user)
-            user._verification_url = _verification_absolute_url(request, token_obj.token)
+            raw_code = token_obj.regenerate_code(length=6)
+            request.session["email_verification_token_id"] = token_obj.pk
+            request.session.modified = True
             try:
-                _send_verification_email(user, token_obj.token)
+                _send_verification_email(user, raw_code)
             except Exception as e:
                 messages.error(
                     request,
@@ -141,8 +148,8 @@ def register_view(request):
                 return redirect('accounts:register')
             messages.success(
                 request,
-                'Compte créé. Un e-mail de confirmation vous a été envoyé à l\'adresse indiquée. '
-                'Cliquez sur le lien dans l\'e-mail pour activer votre compte.'
+                "Compte créé. Un e-mail contenant un code de confirmation vous a été envoyé. "
+                "Saisissez ce code pour activer votre compte."
             )
             return redirect('accounts:check_email')
         messages.error(request, 'Veuillez corriger les erreurs ci-dessous.')
@@ -172,6 +179,79 @@ def verify_email_view(request, token):
 def check_email_view(request):
     """Page affichée après inscription : « Vérifiez votre boîte mail »."""
     return render(request, 'check_email.html')
+
+
+@require_POST
+def verify_email_code_view(request):
+    """Vérifie le code saisi sur la page check_email.html et active le compte."""
+    token_id = request.session.get("email_verification_token_id")
+    raw_code = (request.POST.get("code") or "").strip()
+
+    if not token_id:
+        messages.error(request, "Session expirée. Veuillez vous réinscrire.")
+        return redirect('accounts:register')
+
+    token_obj = get_object_or_404(
+        EmailVerificationToken.objects.select_related("user"),
+        pk=token_id,
+    )
+
+    # Expiration (24h par défaut)
+    if token_obj.is_expired(max_hours=24):
+        token_obj.delete()
+        request.session.pop("email_verification_token_id", None)
+        messages.error(request, "Le code a expiré. Renvoyez un nouveau code.")
+        return redirect('accounts:check_email')
+
+    if not token_obj.check_code(raw_code):
+        token_obj.attempts = (token_obj.attempts or 0) + 1
+        token_obj.save(update_fields=["attempts"])
+
+        if token_obj.attempts >= 5:
+            token_obj.delete()
+            request.session.pop("email_verification_token_id", None)
+            messages.error(request, "Code invalide (trop de tentatives). Réinscrivez-vous.")
+            return redirect('accounts:register')
+
+        messages.error(request, "Code incorrect. Réessayez.")
+        return redirect('accounts:check_email')
+
+    user = token_obj.user
+    user.is_active = True
+    user.save(update_fields=["is_active"])
+    token_obj.delete()
+    request.session.pop("email_verification_token_id", None)
+
+    messages.success(request, "Compte activé. Vous pouvez maintenant vous connecter.")
+    return redirect('accounts:login')
+
+
+@require_POST
+def resend_email_code_view(request):
+    """Renvoyer un nouveau code de vérification par e-mail."""
+    token_id = request.session.get("email_verification_token_id")
+
+    if not token_id:
+        messages.error(request, "Session expirée. Veuillez vous réinscrire.")
+        return redirect('accounts:register')
+
+    token_obj = get_object_or_404(
+        EmailVerificationToken.objects.select_related("user"),
+        pk=token_id,
+    )
+    raw_code = token_obj.regenerate_code(length=6)
+
+    try:
+        _send_verification_email(token_obj.user, raw_code)
+    except Exception:
+        messages.error(
+            request,
+            "Impossible d'envoyer le nouveau code. Contactez le support."
+        )
+        return redirect('accounts:check_email')
+
+    messages.success(request, "Nouveau code envoyé. Vérifiez votre boîte mail.")
+    return redirect('accounts:check_email')
 
 
 def logout_view(request):

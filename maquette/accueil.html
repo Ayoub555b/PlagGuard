@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - PlagGuard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/accueil.css">
+</head>
+<body class="page-accueil">
+  <header class="accueil-header">
+    <button type="button" class="menu-btn" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <h1 class="accueil-brand">PlagGuard</h1>
+    <a href="#" class="profile-btn" aria-label="Profil">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    </a>
+  </header>
+
+  <main class="accueil-main">
+    <div class="hero-block">
+      <div class="hero-card">
+        <div class="hero-shield">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="#2563eb" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="hero-lines">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="accueil-title">Vérifiez l'originalité de votre travail en quelques secondes</h2>
+    <p class="accueil-intro">PlagGuard utilise une IA avancée pour s'assurer que vos contenus sont uniques et conformes.</p>
+
+    <p class="instruction-text">Vérifiez l'unicité de votre contenu : saisissez-le ou collez-le ici</p>
+
+    <div class="check-area">
+      <div class="check-columns">
+        <div class="check-col check-col-text">
+          <label class="check-col-label" for="content">Texte à analyser</label>
+          <textarea id="content" class="content-textarea" placeholder="Collez ou tapez votre texte ici..." maxlength="2500" rows="12"></textarea>
+          <div class="text-zone-footer">
+            <p class="word-count" id="word-count-line"><span id="word-count">0</span> / 500 mots</p>
+            <button type="button" class="btn-export-inline" id="btn-export">Exporter</button>
+          </div>
+        </div>
+        <div class="check-col check-col-urls">
+          <label class="check-col-label" for="urls">URLs à comparer (optionnel)</label>
+          <textarea id="urls" class="urls-textarea" placeholder="https://exemple.com/page1
+https://exemple.com/page2
+Une URL par ligne. Laissez vide pour comparer avec tous les sites." rows="12"></textarea>
+          <p class="urls-hint">Indiquez les sites à comparer. Vide = recherche sur le web entier.</p>
+        </div>
+      </div>
+      <button type="button" class="btn-verify">Vérifier le plagiat</button>
+    </div>
+
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon feature-icon-lightning">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3>Résultats instantanés</h3>
+        <p>Analyse en temps réel</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon feature-icon-shield">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3>Sûr et privé</h3>
+        <p>Vos données restent les vôtres</p>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="accueil.html" class="nav-item nav-active">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11V18a1 1 0 01-1 1h-3m-2 0H9a1 1 0 001-1V8a1 1 0 011-1h2a1 1 0 011 1v10a1 1 0 001 1h3" />
+      </svg>
+      <span>ACCUEIL</span>
+    </a>
+    <a href="historique.html" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>HISTORIQUE</span>
+    </a>
+    <a href="rapport.html" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <span>RAPPORTS</span>
+    </a>
+    <a href="reglages.html" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span>RÉGLAGES</span>
+    </a>
+  </nav>
+
+  <script>
+    const textarea = document.getElementById('content');
+    const wordCountEl = document.getElementById('word-count');
+    const wordCountLine = document.getElementById('word-count-line');
+    function updateWordCount() {
+      const text = textarea.value.trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      wordCountEl.textContent = words;
+      if (wordCountLine) wordCountLine.classList.toggle('word-count--over', words > 500);
+    }
+    textarea.addEventListener('input', updateWordCount);
+
+    // Exporter : ouvre directement la fenêtre "Enregistrer sous" du système (contenu du PC)
+    document.getElementById('btn-export').addEventListener('click', function() {
+      var content = document.getElementById('content').value || 'Rapport PlagGuard (maquette)';
+
+      if ('showSaveFilePicker' in window) {
+        var types = [
+          { description: 'Document PDF', accept: { 'application/pdf': ['.pdf'] } },
+          { description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } },
+          { description: 'Texte', accept: { 'text/plain': ['.txt'] } }
+        ];
+        window.showSaveFilePicker({ suggestedName: 'rapport_plagiat.txt', types: types })
+          .then(function(fileHandle) {
+            return fileHandle.createWritable().then(function(writable) {
+              writable.write(content);
+              writable.close();
+            });
+          })
+          .catch(function(err) {
+            if (err.name !== 'AbortError') console.error(err);
+          });
+      } else {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([content], { type: 'text/plain' }));
+        a.download = 'rapport_plagiat.txt';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+    });
+  </script>
+</body>
+</html>

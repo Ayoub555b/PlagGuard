@@ -771,6 +771,15 @@ body.page-accueil.accueil-dashboard {
   .bottom-nav {
     display: none;
   }
+
+  /* Toggle desktop: masquer/afficher le menu latéral */
+  body.page-accueil.sidebar-collapsed .sidebar-nav {
+    display: none;
+  }
+
+  body.page-accueil.has-sidebar.sidebar-collapsed {
+    padding-left: 0;
+  }
 }
 
 /* ---------- Sidebar toggle mobile ---------- */

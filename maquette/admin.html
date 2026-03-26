@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration - PlagGuard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <a href="connexion.html" class="admin-back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <div class="admin-brand">
+        <span class="admin-brand-name">PlagGuard</span>
+        <span class="admin-brand-badge">Administration</span>
+      </div>
+      <div class="admin-header-actions">
+        <span class="admin-account">
+          <span class="admin-account-dot"></span>
+          Administrateur
+        </span>
+        <a href="connexion.html" class="admin-btn admin-btn-ghost">Déconnexion</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <nav class="admin-nav">
+        <a href="#dashboard" class="admin-nav-item active" data-panel="dashboard">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Tableau de bord
+        </a>
+        <a href="#utilisateurs" class="admin-nav-item" data-panel="utilisateurs">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Utilisateurs
+        </a>
+        <a href="#moderation" class="admin-nav-item" data-panel="moderation">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Modération
+        </a>
+        <a href="#forfaits" class="admin-nav-item" data-panel="forfaits">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Forfaits & quotas
+        </a>
+        <a href="#statistiques" class="admin-nav-item" data-panel="statistiques">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Statistiques
+        </a>
+        <a href="#configuration" class="admin-nav-item" data-panel="configuration">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Configuration
+        </a>
+        <a href="#support" class="admin-nav-item" data-panel="support">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Support
+        </a>
+        <a href="#securite" class="admin-nav-item" data-panel="securite">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Sécurité & logs
+        </a>
+        <a href="#contenu" class="admin-nav-item" data-panel="contenu">
+          <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Contenu
+        </a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <section id="panel-dashboard" class="admin-panel active">
+        <div class="admin-panel-head">
+          <h1>Tableau de bord</h1>
+          <p>Vue d'ensemble du service et indicateurs clés.</p>
+        </div>
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <span class="admin-stat-value">1 247</span>
+            <span class="admin-stat-label">Utilisateurs inscrits</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value">8 932</span>
+            <span class="admin-stat-label">Analyses ce mois</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value">12</span>
+            <span class="admin-stat-label">Demandes support en attente</span>
+          </div>
+        </div>
+        <div class="admin-block">
+          <h3>Activité récente</h3>
+          <p class="admin-muted">Les dernières actions apparaîtront ici.</p>
+        </div>
+      </section>
+
+      <section id="panel-utilisateurs" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Gestion des utilisateurs</h1>
+          <p>Liste des comptes, désactivation, réinitialisation mot de passe, suppression.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Liste des utilisateurs</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-moderation" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Modération</h1>
+          <p>Signalements, plaintes et sanctions.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Signalements et plaintes</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-forfaits" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Forfaits & quotas</h1>
+          <p>Offres, limites d'analyses et abonnements.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Forfaits et limites</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-statistiques" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Statistiques</h1>
+          <p>Analyses, inscriptions, rétention.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Graphiques et rapports</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-configuration" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Configuration globale</h1>
+          <p>Paramètres du site et mode maintenance.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Paramètres</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-support" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Support</h1>
+          <p>Tickets et annonces aux utilisateurs.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Tickets et annonces</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-securite" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Sécurité & logs</h1>
+          <p>Journaux de connexion et accès administrateurs.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Journaux d'activité</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+
+      <section id="panel-contenu" class="admin-panel">
+        <div class="admin-panel-head">
+          <h1>Contenu</h1>
+          <p>CGU, politique de confidentialité, FAQ.</p>
+        </div>
+        <div class="admin-block admin-block-placeholder">
+          <p>Édition des pages</p>
+          <span>Maquette — contenu à venir</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.admin-nav-item').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        var panelId = 'panel-' + this.getAttribute('data-panel');
+        document.querySelectorAll('.admin-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.admin-nav-item').forEach(function(m) { m.classList.remove('active'); });
+        document.getElementById(panelId).classList.add('active');
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
