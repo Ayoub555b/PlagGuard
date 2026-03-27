@@ -962,10 +962,7 @@ def detecteur_plagiat_view(request):
 
 @login_required(login_url="accounts:login")
 def rapport_ia_view(request):
-    """
-    Affiche le "rapport" du détecteur IA (Sapling) basé sur la dernière analyse
-    stockée en session.
-    """
+    """Affiche le rapport du détecteur IA basé sur la dernière analyse stockée en session."""
     util = _get_utilisateur_for_request(request)
     if not util:
         return redirect("accounts:login")
@@ -989,14 +986,7 @@ def rapport_ia_view(request):
     score = float(last.get("score") or (score_pct / 100.0))
 
     top_sentences = last.get("top_sentences") or []
-    perplexity_proxy = last.get("perplexity_proxy")
     stability_std = last.get("stability_std")
-    perplexity_proxy_display = None
-    try:
-        if perplexity_proxy is not None:
-            perplexity_proxy_display = round(float(perplexity_proxy), 2)
-    except Exception:
-        perplexity_proxy_display = None
     prepared_top_sentences = []
     for item in top_sentences:
         try:
@@ -1022,13 +1012,13 @@ def rapport_ia_view(request):
 
     if ia_pct >= IA_ALERT_THRESHOLD_PCT:
         rapport_advice = (
-            "Attention : votre texte a un score Sapling élevé, ce qui suggère une probabilité importante de contenu généré automatiquement. "
+            "Attention : le score IA est élevé, ce qui suggère une probabilité importante de contenu généré automatiquement. "
             "Nous vous conseillons de relire, reformuler et d'ajouter vos sources et votre analyse personnelle."
         )
         rapport_advice_level = "warning"
     else:
         rapport_advice = (
-            "Le score Sapling reste sous le seuil d'alerte. Cela ne garantit pas l'absence totale de contenu généré automatiquement, "
+            "Le score IA reste sous le seuil d'alerte. Cela ne garantit pas l'absence totale de contenu généré automatiquement, "
             "mais l'indication est moins forte. Continuez à reformuler et à citer correctement vos sources."
         )
         rapport_advice_level = "ok"
@@ -1057,8 +1047,6 @@ def rapport_ia_view(request):
             "rapport_advice": rapport_advice,
             "rapport_advice_level": rapport_advice_level,
             "top_sentences": prepared_top_sentences,
-            "perplexity_proxy": perplexity_proxy,
-            "perplexity_proxy_display": perplexity_proxy_display,
         },
     )
 
@@ -1091,9 +1079,7 @@ def _chunk_words(text: str, max_chunks: int = 3) -> list[str]:
 
 
 def _compute_perplexity_proxy_from_token_probs(token_probs: list) -> float | None:
-    """
-    Perplexité proxy = exp( moyenne entropie binaire ) à partir de token_probs Sapling.
-    """
+    """Indicateur interne agrégé à partir des probabilités par jeton (optionnel)."""
     eps = 1e-12
     if not isinstance(token_probs, list) or not token_probs:
         return None
@@ -1119,8 +1105,7 @@ def _compute_perplexity_proxy_from_token_probs(token_probs: list) -> float | Non
 @require_POST
 def sapling_plagiat_api_view(request):
     """
-    Détection Sapling (API AI detector) utilisée côté "détecteur plagiat".
-    Retourne un score 0..1 (0 = humain, 1 = IA probable).
+    API JSON du détecteur IA (score 0..1 : 0 = humain probable, 1 = IA probable).
     """
     util = _get_utilisateur_for_request(request)
     if not util:
@@ -1168,7 +1153,7 @@ def sapling_plagiat_api_view(request):
         except ValueError as exc:
             return JsonResponse({"ok": False, "error": str(exc)}, status=503)
         except requests.RequestException as exc:
-            return JsonResponse({"ok": False, "error": f"Erreur réseau Sapling : {exc}"}, status=502)
+            return JsonResponse({"ok": False, "error": f"Erreur réseau du service de détection IA : {exc}"}, status=502)
 
         score_i = float(data.get("score") or 0.0)
         score_i = max(0.0, min(1.0, score_i))

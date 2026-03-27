@@ -79,9 +79,9 @@
   </aside>
 
   <main class="accueil-main abonnement-main">
-    <h1 class="abonnement-title">Détecteur IA (Sapling)</h1>
+    <h1 class="abonnement-title">Détecteur IA</h1>
     <p class="abonnement-subtitle">
-      Collez votre texte et cliquez sur “Analyser”. Sapling calcule la probabilité (0 à 1) qu’il soit généré automatiquement.
+      Collez votre texte et cliquez sur « Analyser ». L’outil estime la probabilité que le contenu ait été généré automatiquement.
     </p>
 
     <section class="analysis-workspace">
@@ -113,20 +113,17 @@
         </button>
       </div>
 
-      <div id="sapling-result" style="margin-top:1rem; display:none;">
+      <div id="ia-detect-result" style="margin-top:1rem; display:none;">
         <div class="tarif-card" style="max-width:720px;">
           <div class="tarif-card-head">
             <h2 class="tarif-plan" style="font-size:1.1rem;">Résultat</h2>
             <p style="margin:0.25rem 0 0; color: var(--pg-muted);">
-              Score IA probable : <strong id="sapling-score-pct"></strong>
-            </p>
-            <p style="margin:0.45rem 0 0; color: var(--pg-muted);">
-              Perplexité (proxy) : <strong id="sapling-perplexity"></strong>
+              Score IA probable : <strong id="ia-score-pct"></strong>
             </p>
           </div>
           <div style="margin-top:0.75rem;">
             <p style="margin:0 0 0.5rem; font-weight:600;">Extraits les plus “à risque” :</p>
-            <ul id="sapling-top-sentences" style="padding-left:1.1rem; margin:0;"></ul>
+            <ul id="ia-top-sentences" style="padding-left:1.1rem; margin:0;"></ul>
           </div>
         </div>
       </div>
@@ -140,12 +137,11 @@
       var textarea = document.getElementById('content');
       var feedbackEl = document.getElementById('verify-feedback');
       var btn = document.getElementById('btn-verify');
-      var resultBox = document.getElementById('sapling-result');
-      var scorePctEl = document.getElementById('sapling-score-pct');
-      var perplexityEl = document.getElementById('sapling-perplexity');
-      var topSentencesEl = document.getElementById('sapling-top-sentences');
+      var resultBox = document.getElementById('ia-detect-result');
+      var scorePctEl = document.getElementById('ia-score-pct');
+      var topSentencesEl = document.getElementById('ia-top-sentences');
 
-      var saplingUrl = "{% url 'accounts:sapling_plagiat_api' %}";
+      var iaDetectUrl = "{% url 'accounts:sapling_plagiat_api' %}";
 
       function getCsrfToken() {
         var name = 'csrftoken';
@@ -200,7 +196,7 @@
         setFeedback('Analyse en cours...', false);
         btn.disabled = true;
 
-        fetch(saplingUrl, {
+        fetch(iaDetectUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -226,12 +222,6 @@
               }
               var scorePct = data.score_pct != null ? data.score_pct : '';
               scorePctEl.textContent = scorePct + '%';
-              if (data.perplexity_proxy != null) {
-                var p = Number(data.perplexity_proxy);
-                perplexityEl.textContent = isNaN(p) ? '—' : p.toFixed(2);
-              } else {
-                perplexityEl.textContent = '—';
-              }
               var top = data.top_sentences || [];
               topSentencesEl.innerHTML = '';
               top.forEach(function(item) {
@@ -247,7 +237,7 @@
             }
           })
           .catch(function(err) {
-            console.error('Sapling fetch error:', err);
+            console.error('Détecteur IA fetch error:', err);
             var msg = (err && err.message) ? err.message : '';
             setFeedback('Erreur réseau ou serveur.' + (msg ? ' ' + msg : ''), true);
           })

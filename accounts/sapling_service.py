@@ -17,7 +17,7 @@ def sapling_ai_detect(text: str) -> dict:
     """
     api_key = (getattr(settings, "SAPLING_API_KEY", "") or "").strip()
     if not api_key:
-        raise ValueError("SAPLING_API_KEY non configuré dans le fichier .env.")
+        raise ValueError("Clé API du détecteur IA non configurée (voir le fichier .env).")
 
     payload = {
         "key": api_key,
