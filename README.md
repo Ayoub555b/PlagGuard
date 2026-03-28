@@ -1,61 +1,104 @@
 # PlagGuard — Détection de plagiat et de contenu généré par IA
 
-## Contexte du projet
-
-**PlagGuard** est une application web développée dans le cadre d’un projet de **génie logiciel**. Elle permet aux utilisateurs de soumettre des textes académiques ou professionnels, d’estimer le risque de **plagiat** par comparaison avec des sources en ligne, et d’utiliser un **détecteur de contenu potentiellement généré par IA** (service externe configuré par clé API). Le projet inclut également une **gestion des comptes** (inscription, confirmation par code e-mail, réinitialisation de mot de passe), un **historique des analyses**, des **rapports détaillés**, une **page de tarification** (Francs djiboutiens) et un module d’**abonnement** (WaafiPay en mode intégration, avec possibilité d’activation manuelle côté administrateur pour les tests).
+Application web développée dans le cadre d’un projet de **génie logiciel**. Ce document présente le projet, l’équipe, les technologies et un guide technique pour installer et faire tourner l’application.
 
 ---
 
 ## Table des matières
 
-1. [Fonctionnalités principales](#fonctionnalités-principales)
-2. [Stack technique](#stack-technique)
-3. [Architecture logicielle](#architecture-logicielle)
-4. [Structure du dépôt](#structure-du-dépôt)
-5. [Prérequis](#prérequis)
-6. [Installation](#installation)
-7. [Configuration (variables d’environnement)](#configuration-variables-denvironnement)
-8. [Base de données](#base-de-données)
-9. [Lancement de l’application](#lancement-de-lapplication)
-10. [Routes et URLs utiles](#routes-et-urls-utiles)
-11. [Fonctionnalités détaillées](#fonctionnalités-détaillées)
-12. [Sécurité et bonnes pratiques](#sécurité-et-bonnes-pratiques)
-13. [Dépannage](#dépannage)
-14. [Annexes pour le rapport](#annexes-pour-le-rapport)
+1. [Description du projet](#description-du-projet)
+2. [Objectifs](#objectifs)
+3. [Présentation de l’équipe](#présentation-de-léquipe)
+4. [Technologies utilisées](#technologies-utilisées)
+5. [Fonctionnalités](#fonctionnalités-côté-client-et-administrateur)
+6. [Structure du projet](#structure-du-projet)
+7. [Tests réalisés](#tests-réalisés)
+8. [Licence](#licence)
+9. [Remerciements](#remerciements)
+10. [Annexe — Guide d’installation et d’exploitation](#annexe--guide-dinstallation-et-dexploitation)
 
 ---
 
-## Fonctionnalités principales
+## 📌 Description du projet
 
-| Domaine | Description |
-|--------|-------------|
-| **Authentification** | Inscription, connexion, déconnexion, confirmation de compte par **code à 6 chiffres** envoyé par e-mail, renvoi de code, réinitialisation de mot de passe (lien par e-mail). |
-| **Analyse de plagiat** | Saisie de texte (bornes de mots), import PDF/Word optionnel, recherche web (Tavily), pipeline de similarité (Jaccard, TF-IDF, cosinus, etc.), rapport avec sources et seuil configurable. |
-| **Détecteur IA (premium)** | Accès sous abonnement actif : score de probabilité IA, analyse par segments, rapport dédié. |
-| **Détecteur plagiat (page dédiée)** | Même pipeline d’analyse que l’accueil, interface simplifiée pour les abonnés. |
-| **Historique & rapports** | Liste des analyses passées, détail par rapport. |
-| **Réglages** | Seuil de plagiat, préférences liées au module plagiat. |
-| **Abonnement** | Page tarifaire en Fdj, forfait gratuit, paiement WaafiPay (HPP) pour les offres payantes, callbacks succès/échec ; activation manuelle possible via l’admin Django. |
-| **Interface** | Pages responsive, menu latéral, navigation mobile (bottom nav), thème cohérent (CSS dédiés). |
+**PlagGuard** permet aux utilisateurs de soumettre des textes académiques ou professionnels, d’estimer le risque de **plagiat** par comparaison avec des sources en ligne, et d’utiliser un **détecteur de contenu potentiellement généré par IA** (service externe via clé API). Le projet inclut une **gestion des comptes** (inscription, confirmation par code e-mail, réinitialisation du mot de passe), un **historique des analyses**, des **rapports détaillés**, une **page de tarification** (Francs djiboutiens) et un module d’**abonnement** (WaafiPay en mode intégration, avec possibilité d’activation manuelle côté administrateur pour les tests).
 
 ---
 
-## Stack technique
+## 🎯 Objectifs
 
-- **Framework** : [Django](https://www.djangoproject.com/) 5.x (Python 3.10+)
-- **Base de données** : PostgreSQL (configuration par défaut dans `config/settings.py`)
-- **Front** : Templates Django, HTML/CSS, JavaScript (Fetch API pour les appels AJAX)
-- **APIs externes** :
-  - **Tavily** — recherche web pour le plagiat
-  - **Service de détection IA** — probabilité de texte généré automatiquement (clé API dans `.env`)
-  - **WaafiPay** — paiement d’abonnement (HPP + API transaction)
-- **Traitement texte / ML** : scikit-learn, numpy ; extraction PDF/Word : pypdf, python-docx
+- Offrir une interface claire pour **analyser l’originalité** d’un texte à partir de sources web (recherche Tavily, métriques de similarité).
+- Proposer, pour les abonnés, un **indicateur de probabilité « texte généré par IA** » et des rapports associés.
+- Assurer un **parcours utilisateur complet** : inscription sécurisée, réglages (dont seuil de plagiat), historique et abonnements adaptés au contexte (Fdj, WaafiPay).
+- Fournir une **base technique maintenable** (Django, PostgreSQL, APIs documentées) pour la démonstration, le rapport et la soutenance.
+
+---
+
+## 👥 Présentation de l’équipe
+
+| Rôle | Nom |
+|------|-----|
+| **Chef de projet** | Doualeh Mohamed |
+| **Backend** | Ayoub Atteyeh Abib |
+| **Frontend** | Hassan Ismael Hassan |
+| **Rédacteur** | Gouro Hassan Loita |
+
+---
+
+## ⚙️ Technologies utilisées
+
+| Domaine | Détail |
+|--------|--------|
+| **Framework** | [Django](https://www.djangoproject.com/) 5.x (Python 3.10+) |
+| **Base de données** | PostgreSQL (configuration par défaut dans `config/settings.py`) |
+| **Interface** | Templates Django, HTML/CSS, JavaScript (Fetch API pour les appels AJAX) |
+| **APIs externes** | **Tavily** (recherche web) ; service de **détection IA** (ex. Sapling, variable `SAPLING_API_KEY`) ; **WaafiPay** (paiement HPP + API transaction) |
+| **Traitement texte / ML** | scikit-learn, numpy ; extraction PDF/Word : pypdf, python-docx |
 
 Les dépendances Python sont listées dans `requirements.txt`.
 
 ---
 
-## Architecture logicielle
+## 🚀 Fonctionnalités (côté client et administrateur)
+
+### Côté client (utilisateur)
+
+| Domaine | Description |
+|--------|-------------|
+| **Authentification** | Inscription, connexion, déconnexion, confirmation de compte par **code à 6 chiffres** par e-mail, renvoi de code, réinitialisation du mot de passe (lien par e-mail). |
+| **Analyse de plagiat** | Saisie de texte (bornes de mots), import PDF/Word optionnel, recherche web, pipeline de similarité (Jaccard, TF-IDF, cosinus, etc.), rapport avec sources et seuil configurable. |
+| **Détecteur IA (premium)** | Accès avec abonnement actif : score de probabilité IA, analyse par segments, rapport dédié. |
+| **Détecteur plagiat (page dédiée)** | Même pipeline que l’accueil, interface simplifiée pour les abonnés. |
+| **Historique & rapports** | Liste des analyses passées, détail par rapport. |
+| **Réglages** | Seuil de plagiat et préférences liées au module plagiat. |
+| **Abonnement** | Page tarifaire en Fdj, forfait gratuit, paiement WaafiPay pour les offres payantes, callbacks succès/échec. |
+| **Interface** | Pages responsive, menu latéral, navigation mobile (bottom nav), thème cohérent. |
+
+### Côté administrateur
+
+| Domaine | Description |
+|--------|-------------|
+| **Administration Django** | Accès à `/admin/` : gestion des utilisateurs, modèles métier. |
+| **Abonnements** | Activation ou désactivation manuelle des abonnements (simulation sans compte marchand réel), suivi des références Waafi. |
+
+---
+
+## 🗂️ Structure du projet
+
+### Arborescence principale
+
+| Élément | Rôle |
+|--------|------|
+| `manage.py` | Point d’entrée Django |
+| `config/` | Projet Django (settings, urls, wsgi) |
+| `accounts/` | Application métier (vues, modèles, migrations, services) |
+| `templates/` | Pages HTML (accueil, connexion, rapports, etc.) |
+| `static/` | Feuilles de style, images |
+| `requirements.txt` | Dépendances pip |
+| `.env.example` | Modèle de variables d’environnement (à copier en `.env`) |
+| `venv/` | Environnement virtuel Python (local, en général non versionné) |
+
+### Architecture logicielle (aperçu)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -63,10 +106,10 @@ Les dépendances Python sont listées dans `requirements.txt`.
 └───────────────────────────┬─────────────────────────────────┘
                             │ HTTP / JSON
 ┌───────────────────────────▼─────────────────────────────────┐
-│              Django — app `accounts` (vues, URLs)           │
-│  • Vues pages (accueil, historique, rapports, réglages…)     │
-│  • API JSON (analyse plagiat, import document, détecteur IA)   │
-│  • Auth, sessions, messages                                  │
+│              Django — app `accounts` (vues, URLs)             │
+│  • Vues pages (accueil, historique, rapports, réglages…)      │
+│  • API JSON (analyse plagiat, import document, détecteur IA)  │
+│  • Auth, sessions, messages                                   │
 └───────────────────────────┬─────────────────────────────────┘
                             │
         ┌───────────────────┼───────────────────┐
@@ -79,47 +122,71 @@ Les dépendances Python sont listées dans `requirements.txt`.
 └──────────────┘   └─────────────────┘   └──────────────┘
 ```
 
-**Applications Django** : principalement l’application `accounts` (modèles, vues, formulaires, context processors, admin).
-
-**Fichiers de configuration** : `config/settings.py`, `config/urls.py`, `manage.py`.
+**Applications Django** : principalement `accounts` (modèles, vues, formulaires, context processors, admin). **Configuration** : `config/settings.py`, `config/urls.py`, `manage.py`.
 
 ---
 
-## Structure du dépôt
+## 🧪 Tests réalisés
 
-| Élément | Rôle |
-|--------|------|
-| `manage.py` | Point d’entrée Django |
-| `config/` | Projet Django (settings, urls, wsgi) |
-| `accounts/` | Application métier (vues, modèles, migrations, services) |
-| `templates/` | Pages HTML (accueil, connexion, rapports, etc.) |
-| `static/` | Feuilles de style, images |
-| `requirements.txt` | Dépendances pip |
-| `.env.example` | Modèle de variables d’environnement (à copier en `.env`) |
-| `venv/` | Environnement virtuel Python (local, non versionné en général) |
+Les vérifications ont été menées de façon **manuelle** sur les parcours principaux :
+
+- **Authentification** : inscription, réception du code e-mail, validation du compte, connexion/déconnexion, mot de passe oublié.
+- **Analyse de plagiat** : textes de longueurs variées, import de fichiers, cohérence du rapport et des sources affichées.
+- **Abonnement et premium** : affichage des offres, flux de paiement ou activation admin, visibilité des détecteurs selon le statut d’abonnement.
+- **Interface** : navigation desktop et mobile, formulaires et messages d’erreur.
+
+Des **tests automatisés** (unitaires ou d’intégration Django) peuvent être ajoutés dans une évolution future du projet.
+
+---
+
+## 📄 Licence
+
+Ce projet est réalisé dans un cadre **pédagogique** (maquette / projet de génie logiciel). L’usage commercial ou la redistribution nécessitent une validation juridique et le respect des conditions d’utilisation des services tiers (Tavily, détecteur IA, WaafiPay, etc.).
+
+---
+
+## 🙏 Remerciements
+
+Remerciements à l’équipe pédagogique et au jury pour l’encadrement du module de génie logiciel, ainsi qu’aux fournisseurs des API et services tiers intégrés dans la démonstration.
+
+---
+
+# Annexe — Guide d’installation et d’exploitation
+
+*Les sections suivantes complètent le README pour les développeurs et la reprise du projet.*
+
+## Table des matières (annexe)
+
+1. [Prérequis](#prérequis)
+2. [Installation](#installation)
+3. [Configuration (variables d’environnement)](#configuration-variables-denvironnement)
+4. [Base de données](#base-de-données)
+5. [Lancement de l’application](#lancement-de-lapplication)
+6. [Routes et URLs utiles](#routes-et-urls-utiles)
+7. [Fonctionnalités détaillées](#fonctionnalités-détaillées)
+8. [Sécurité et bonnes pratiques](#sécurité-et-bonnes-pratiques)
+9. [Dépannage](#dépannage)
+10. [Annexes pour le rapport](#annexes-pour-le-rapport)
 
 ---
 
 ## Prérequis
 
 - **Python** 3.10 ou supérieur
-- **PostgreSQL** (version compatible avec Django ; instance locale avec base et utilisateur configurés)
+- **PostgreSQL** (instance locale avec base et utilisateur configurés)
 - **pip** et idéalement **venv**
-- Comptes / clés pour les services utilisés en production ou démo :
-  - clé API **Tavily**
-  - clé API **détecteur IA** (`SAPLING_API_KEY` dans `.env`)
-  - (optionnel) identifiants **WaafiPay** pour les tests de paiement
-- Pour l’envoi d’e-mails : compte SMTP (ex. Gmail avec mot de passe d’application) — à configurer dans `settings.py` ou via variables d’environnement selon votre déploiement
+- Clés / comptes selon l’usage : **Tavily**, **détecteur IA** (`SAPLING_API_KEY`), optionnellement **WaafiPay**
+- **SMTP** pour l’envoi des e-mails (ex. Gmail avec mot de passe d’application)
 
 ---
 
 ## Installation
 
-### 1. Cloner ou copier le projet
+### 1. Placer le projet
 
-Placer le dossier du projet sur la machine de développement.
+Cloner ou copier le dépôt sur la machine de développement.
 
-### 2. Créer et activer un environnement virtuel
+### 2. Environnement virtuel
 
 **Windows (PowerShell)** :
 
@@ -137,15 +204,15 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Installer les dépendances
+### 3. Dépendances
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Fichier d’environnement
+### 4. Fichier `.env`
 
-Copier `.env.example` vers `.env` à la racine du projet et renseigner les clés (voir section suivante).
+Copier `.env.example` vers `.env` et renseigner les clés (voir ci-dessous).
 
 ### 5. Migrations et superutilisateur
 
@@ -154,37 +221,32 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-Le compte superutilisateur permet d’accéder à `/admin/` pour gérer les utilisateurs et les abonnements manuels.
+Le superutilisateur permet d’accéder à `/admin/`.
 
 ---
 
 ## Configuration (variables d’environnement)
 
-Le fichier **`.env`** (non versionné) complète ou surcharge les réglages. Reprendre au minimum les clés suivantes depuis `.env.example` :
+Le fichier **`.env`** (non versionné) complète les réglages. Variables typiques (voir `.env.example`) :
 
 | Variable | Usage |
 |----------|--------|
 | `TAVILY_API_KEY` | Recherche web pour l’analyse de plagiat |
-| `SAPLING_API_KEY` | Détecteur IA (nom technique de la variable) |
-| `SITE_URL` | URL publique du site **sans slash final** (liens dans les e-mails : confirmation, reset mot de passe). Ex. `http://127.0.0.1:8000` ou `https://votre-sous-domaine.ngrok-free.app` |
-| Variables **WaafiPay** | Préfixe `WAAFI_*` selon `.env.example` pour les abonnements payants |
+| `SAPLING_API_KEY` | Détecteur IA |
+| `SITE_URL` | URL publique **sans slash final** (liens dans les e-mails). Ex. `http://127.0.0.1:8000` ou URL ngrok |
+| `WAAFI_*` | Identifiants WaafiPay pour les abonnements payants |
 
-**Important** : ne jamais commiter le fichier `.env` ni des mots de passe en clair dans le dépôt.
-
-La configuration SMTP pour les e-mails est définie dans `config/settings.py` ; en production, il est recommandé d’utiliser des variables d’environnement plutôt que des valeurs codées en dur.
+Ne jamais commiter `.env`. La configuration SMTP est définie dans `config/settings.py` ; en production, privilégier les variables d’environnement.
 
 ---
 
 ## Base de données
 
-Par défaut, le projet utilise **PostgreSQL** avec les paramètres définis dans `config/settings.py` (`NAME`, `USER`, `PASSWORD`, `HOST`, `PORT`).
+Par défaut : **PostgreSQL** (`NAME`, `USER`, `PASSWORD`, `HOST`, `PORT` dans `config/settings.py`).
 
-**Avant le premier `migrate`** :
+Avant le premier `migrate` : créer la base (ex. `plagiat`) et adapter `DATABASES` si besoin.
 
-1. Créer la base PostgreSQL (ex. `plagiat`).
-2. Adapter `DATABASES` dans `settings.py` si votre utilisateur ou mot de passe diffère.
-
-Pour un usage **uniquement local** sans PostgreSQL, on peut temporairement remplacer par SQLite (fichier `db.sqlite3`) — à documenter dans le rapport si cette variante est utilisée pour la démo.
+Pour des essais locaux uniquement, SQLite peut être utilisée temporairement — à mentionner dans le rapport si c’est le cas pour la démo.
 
 ---
 
@@ -194,31 +256,31 @@ Pour un usage **uniquement local** sans PostgreSQL, on peut temporairement rempl
 python manage.py runserver
 ```
 
-Puis ouvrir un navigateur sur `http://127.0.0.1:8000/`.
+Ouvrir `http://127.0.0.1:8000/`.
 
-Pour exposer l’application via **ngrok** (tests mobiles, e-mails avec liens corrects), lancer ngrok vers le port 8000 et renseigner `SITE_URL` avec l’URL HTTPS fournie par ngrok. Les `CSRF_TRUSTED_ORIGINS` dans `settings.py` incluent déjà des motifs pour les domaines ngrok.
+Pour **ngrok** : tunnel vers le port 8000, puis renseigner `SITE_URL` avec l’URL HTTPS ngrok. `CSRF_TRUSTED_ORIGINS` dans `settings.py` peut inclure les domaines ngrok.
 
 ---
 
 ## Routes et URLs utiles
 
-| URL (relatif à la racine du site) | Description |
-|----------------------------------|-------------|
-| `/` | Page d’accueil marketing (landing) |
+| URL | Description |
+|-----|-------------|
+| `/` | Landing marketing |
 | `/connexion/` | Connexion |
-| `/inscription/` | Inscription (`?force=1` pour forcer l’écran d’inscription si déjà connecté) |
-| `/verifiez-votre-email/` | Saisie du code de confirmation |
+| `/inscription/` | Inscription (`?force=1` pour forcer l’écran si déjà connecté) |
+| `/verifiez-votre-email/` | Code de confirmation |
 | `/accueil/` | Tableau de bord / analyse plagiat |
 | `/historique/` | Historique |
 | `/rapport/<id>/` | Détail d’un rapport |
 | `/reglages/`, `/reglages/plagiat/` | Réglages |
 | `/abonnement/` | Tarification et abonnement |
-| `/detecteur-ia/`, `/detecteur-plagiat/` | Détecteurs (accès premium selon abonnement) |
-| `/rapport-ia/` | Rapport détecteur IA (après analyse) |
+| `/detecteur-ia/`, `/detecteur-plagiat/` | Détecteurs (premium) |
+| `/rapport-ia/` | Rapport détecteur IA |
 | `/mot-de-passe-oublie/` | Réinitialisation du mot de passe |
 | `/admin/` | Administration Django |
 
-Les routes API incluent notamment `/api/analyser/` (plagiat) et `/api/detecteur-plagiat/sapling/` (IA).
+API notamment : `/api/analyser/` (plagiat), `/api/detecteur-plagiat/sapling/` (IA).
 
 ---
 
@@ -226,35 +288,29 @@ Les routes API incluent notamment `/api/analyser/` (plagiat) et `/api/detecteur-
 
 ### Analyse de plagiat
 
-- Contraintes de longueur (nombre de mots) côté client et serveur.
-- Option d’URLs cibles pour affiner la comparaison.
-- Pipeline dans `accounts/plagiarism_service.py` et services associés ; recherche via `accounts/tavily_search.py`.
+Contraintes de longueur côté client et serveur, URLs cibles optionnelles, pipeline dans `accounts/plagiarism_service.py`, recherche via `accounts/tavily_search.py`.
 
 ### Détecteur IA
 
-- Appels à `accounts/sapling_service.py`.
-- Analyse par segments pour lisser le score ; indicateur de stabilité entre segments dans les conseils du rapport si besoin.
+Appels dans `accounts/sapling_service.py`, analyse par segments et indicateurs dans le rapport.
 
 ### Abonnement
 
-- Modèle `AbonnementWaafi` : plan, statut, dates, référence Waafi.
-- Actions admin : activation / désactivation pour simulation sans compte marchand réel.
-- Context processor `subscription_context` : variable `has_abonnement_actif` pour afficher les entrées premium dans les menus.
+Modèle `AbonnementWaafi` ; context processor `subscription_context` (`has_abonnement_actif`) pour les menus premium.
 
 ### E-mails
 
-- Confirmation d’inscription : **code numérique** + page de validation.
-- Mot de passe oublié : flux Django standard (`PasswordResetView`) avec templates dans `templates/registration/`.
+Confirmation avec **code numérique** ; mot de passe oublié via flux Django (`templates/registration/`).
 
 ---
 
 ## Sécurité et bonnes pratiques
 
-- **`SECRET_KEY`** : à régénérer et isoler en production ; ne pas publier dans un rapport public.
-- **Clés API** (recherche web, détecteur IA, Waafi) : uniquement dans `.env` ou un coffre-fort de secrets.
-- **`DEBUG=False`** en production ; configurer `ALLOWED_HOSTS` et HTTPS.
-- **CSRF** : activé ; les appels AJAX envoient le token CSRF (cookie + en-tête).
-- **Mots de passe** : hachés par Django ; réinitialisation par jeton à usage limité dans le temps.
+- **`SECRET_KEY`** : régénérer en production, ne pas publier.
+- **Clés API** : uniquement dans `.env` ou un gestionnaire de secrets.
+- **`DEBUG=False`** en production ; `ALLOWED_HOSTS` et HTTPS.
+- **CSRF** : activé ; les appels AJAX envoient le token CSRF.
+- **Mots de passe** : hachage Django ; reset par jeton à durée limitée.
 
 ---
 
@@ -262,31 +318,24 @@ Les routes API incluent notamment `/api/analyser/` (plagiat) et `/api/detecteur-
 
 | Problème | Piste |
 |----------|--------|
-| Erreur de connexion PostgreSQL | Vérifier que le service PostgreSQL tourne, que la base existe, et que `DATABASES` correspond. |
-| 403 CSRF | Recharger la page après connexion ; vérifier `CSRF_TRUSTED_ORIGINS` derrière ngrok/HTTPS. |
+| PostgreSQL | Service démarré, base créée, `DATABASES` correct. |
+| 403 CSRF | Recharger après connexion ; `CSRF_TRUSTED_ORIGINS` derrière ngrok/HTTPS. |
 | Liens vides dans les e-mails | Définir `SITE_URL` dans `.env`. |
-| Détecteurs invisibles | Vérifier qu’un abonnement actif existe (admin ou paiement) et que `has_abonnement_actif` est vrai. |
-| E-mails non reçus | Vérifier SMTP, dossier spam, et paramètres Gmail (mot de passe d’application). |
+| Détecteurs invisibles | Abonnement actif (admin ou paiement). |
+| E-mails absents | SMTP, spam, mot de passe d’application Gmail. |
 
 ---
 
 ## Annexes pour le rapport
 
-Éléments que vous pouvez développer dans le mémoire ou la soutenance :
+Idées à développer dans le mémoire ou la soutenance :
 
-1. **Cahier des charges** : objectifs, acteurs, contraintes (langue FR, monnaie Fdj, contexte Djibouti pour le paiement).
-2. **Modèle de données** : schéma entité-association ou MCD (tables `UTILISATEUR`, `ANALYSE`, `ABONNEMENT_WAAFIPAY`, etc.).
-3. **Diagrammes** : cas d’utilisation (inscription, analyse, abonnement), séquence pour une analyse complète.
-4. **Choix techniques** : pourquoi Django, pourquoi APIs externes (recherche web, détecteur IA, Waafi).
-5. **Tests** : manuels (parcours utilisateur), possibilité d’évoquer tests automatisés futurs.
-6. **Limites** : dépendance aux APIs, coûts, précision des détecteurs, sécurité des clés.
-
----
-
-## Licence et usage académique
-
-Ce projet est réalisé dans un cadre **pédagogique** (maquette / projet de génie logiciel). L’usage commercial ou la redistribution nécessitent une validation juridique et la conformité aux conditions d’utilisation des services tiers intégrés.
+1. **Cahier des charges** : objectifs, acteurs, contraintes (FR, Fdj, contexte Djibouti).
+2. **Modèle de données** : MCD / tables utilisateur, analyse, abonnement, etc.
+3. **Diagrammes** : cas d’utilisation, séquence pour une analyse complète.
+4. **Choix techniques** : Django, APIs externes (Tavily, IA, Waafi).
+5. **Limites** : dépendance aux APIs, coûts, précision des détecteurs, gestion des secrets.
 
 ---
 
-**PlagGuard** — Projet génie logiciel — Documentation générée pour accompagner le rapport et la reprise du projet par d’autres développeurs ou le jury.
+**PlagGuard** — Projet génie logiciel — Documentation pour le jury et la reprise du projet.
