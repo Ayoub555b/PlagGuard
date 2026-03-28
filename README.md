@@ -147,7 +147,17 @@ Ce projet est réalisé dans un cadre **pédagogique** (maquette / projet de gé
 
 ## 🙏 Remerciements
 
-Remerciements à l’équipe pédagogique et au jury pour l’encadrement du module de génie logiciel, ainsi qu’aux fournisseurs des API et services tiers intégrés dans la démonstration.
+Tout d’abord, nous remercions à Allah, le très haut qui nous a donné le courage et la volonté de réaliser ce modeste travail.
+
+Nous remercions nos très chers parents, qui ont toujours été là pour nous.
+
+Nous remercions nos frères et nos sœurs, pour leurs encouragements.
+
+Nos remerciements s’adressent aussi à Dr. MOUBAREK BARRE pour ses précieux conseils, sa disponibilité, sa compréhension, sa gentillesse, les encouragements et son orientation tout au long de notre recherche.
+
+Nous tenons à remercier très sincèrement l’ensemble des membres du jury qui nous font le grand honneur d’accepter de juger notre travail.
+
+Enfin, nous adressons nos plus sincères remerciements à tous nos amis, qui nous ont toujours soutenu et encouragé au cours de la réalisation de ce projet.
 
 ---
 
